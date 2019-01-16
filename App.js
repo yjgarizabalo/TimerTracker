@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   timerContainer: {
     backgroundColor: 'transparent',
-    paddingHorizontal: 15,
-    paddingBottom: 15, 
+    paddingHorizontal: 10,
+    paddingBottom: 10, 
   }
 });
