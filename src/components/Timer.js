@@ -1,89 +1,119 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import Button from './Button'
+import {
+  View,
+  Text,
+  StyleSheet
+} from 'react-native'
+import Buttom from './Button'
 
-function Timer ({ title, description }) {
-  return(
-    <View style={ styles.container}>
-      <View>
-        <Text style={ styles.textBold }>{ title }</Text>
-        <Text>{ description }</Text>
+function Timer ({ 
+    id,
+    project, 
+    title, 
+    elapsed, 
+    isRunning, 
+    onStartPress, 
+    onStopPress,
+    onRemovePress,
+    onEditPress
+}) {
+  return (
+    <View style={styles.container}>
+      <View style={styles.fullWidth}>
+        <Text style={[styles.textStyle, styles.boldStyle]}>{ title }</Text>
+        <Text style={styles.textStyle}>{ project }</Text>
       </View>
-      <View style={ styles.clock }>
-        <Text style={[ styles.textBig, styles.textBold ]}>0:00:00</Text>
+      <View style={styles.timerView}>
+        <Text style={[styles.textStyle, styles.boldStyle, styles.timerText]}>01:31:00</Text>
       </View>
-      <View style={ styles.buttonAction }>
-        <View style={[ styles.col, styles.pRight ]}>
-          <Button 
+      <View style={[styles.editAndRemoveButtonsView, styles.fullWidth]}>
+        <View style={[styles.editButtonView, styles.flex]}>
+          <Buttom 
             text="Edit"
-            containerStyle={ styles.colorAction }
-            textStyles={[ styles.colorAction, styles.textBold  ]}/>
+            textStyles={[styles.textStyle, styles.smallButton]}
+            containerStyles={styles.smallButton}
+            onPress={ onEditPress }
+          />
         </View>
-        <View style={[ styles.col, styles.pLeft ]}>
-          <Button 
+        <View style={[styles.removeButtonView, styles.flex]}>
+          <Buttom 
             text="Remove"
-            containerStyle={ styles.colorAction } 
-            textStyles={[ styles.colorAction, styles.textBold  ]}/>
+            textStyles={[styles.textStyle, styles.smallButton]}
+            containerStyles={styles.smallButton}
+            onPress={() => onRemovePress( id )}
+          />
         </View>
       </View>
-      <View>
-        <Button 
-          text="Start" 
-          containerStyle={ styles.colorStart } 
-          textStyles={[ styles.colorStart, styles.textBold  ]}/>
-        {/* <Button 
-          text="Start" 
-          containerStyle={ styles.colorStop } 
-          textStyles={[ styles.colorStart, styles.textBold  ]}/> */}
+      <View style={[styles.editAndRemoveButtonsView, { marginTop: 10 }]}>
+        {isRunning ? (
+          <Buttom 
+            text="Stop"
+            textStyles={[styles.textStyle, styles.stopButton]}
+            containerStyles={styles.stopButton}
+            onPress={ this._handleStopPress }
+          />
+        ): (
+          <Buttom 
+            text="Start"
+            textStyles={[styles.textStyle, styles.largeButton]}
+            containerStyles={styles.largeButton}
+            onPress={ this._handleStartPress }
+          />
+        )}
       </View>
     </View>
   )
 }
-const paddingVariable = 18
+
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    borderColor: '#bdc3c7',
-    borderWidth: 2,
+    backgroundColor: 'white',
+    padding: 10,
     borderRadius: 5,
-    padding: paddingVariable,
+    borderWidth: 1,
+    borderColor: '#bdc3c7'
   },
-  clock: {
-    paddingVertical: paddingVariable,
+  flex: {
+    flex: 1
+  },
+  fullWidth: {
+    width: '100%',
+  },
+  textStyle: {
+    fontFamily: 'proxima-nova-semibold',
+    color: '#4a4a4a'
+  },
+  boldStyle: {
+    fontSize: 18
+  },
+  timerView: {
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 15,
   },
-  textBold: {
-    fontWeight: '900'
+  timerText: {
+    fontSize: 25
   },
-  textBig: {
-    fontSize: 40,
-  },
-  col: {
-    flex: 1,
-  },
-  buttonAction:{
-    justifyContent: 'space-around',
+  editAndRemoveButtonsView: {
     flexDirection: 'row',
-    marginBottom: paddingVariable,
   },
-  pLeft: {
-    paddingLeft: paddingVariable,
+  editButtonView: {
+    paddingRight: 50
   },
-  pRight: {
-    paddingRight: paddingVariable,
+  removeButtonView: {
+    paddingLeft: 50
   },
-  colorAction:{
-    borderColor: "#2980b9",
-    color: '#2980b9'
+  smallButton: {
+    color: '#2980b9',
+    borderColor: '#2980b9'
   },
-  colorStop:{
-    borderColor: "#c0392b",
-    color: '#c0392b'
+  largeButton: {
+    color: '#2ecc71',
+    borderColor: '#2ecc71'
   },
-  colorStart:{
-    borderColor: "#27ae60",
-    color: '#27ae60'
+  stopButton: {
+    color: '#e74c3c',
+    borderColor: '#e74c3c'
   }
 })
 

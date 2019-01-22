@@ -1,7 +1,7 @@
 import React from 'react'
 import {
-  View,
   Text,
+  View,
   Platform,
   StyleSheet,
   TouchableOpacity,
@@ -9,46 +9,48 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 
-function Button ({ containerStyle, textStyles, children, disebled, text }){
-  return(
-    Platform.select({
-      ios: (
-        <TouchableOpacity disabled={ disebled } style={ [styles.container, containerStyle] }>
-          { text ? <Text style={ textStyles }>{ text }</Text> : children }
-        </TouchableOpacity>
-      ),
-      android: (
-        <TouchableNativeFeedback disabled={ disebled }>
-          <View style={ [styles.container, containerStyle] }> 
-            { text ? <Text style={ textStyles }>{ text }</Text> : children }
-          </View>
-        </TouchableNativeFeedback>
-      )
-    })
+function Button ({ containerStyles, textStyles, children, disabled, text, onPress }) {
+  return (
+   Platform.select({
+     ios: (
+      <TouchableOpacity onPress={ onPress } disabled={ disabled } style={[styles.container, containerStyles]}>
+        { text ? <Text style={textStyles}>{text}</Text> : children }
+      </TouchableOpacity>
+     ),
+     android: (
+      <TouchableNativeFeedback onPress={ onPress } disabled={ disabled }>
+        <View style={[styles.container, containerStyles]}>
+          { text ? <Text style={textStyles}>{text}</Text> : children }
+        </View>
+      </TouchableNativeFeedback>
+     )
+   })
   )
 }
 
 Button.propTypes = {
-  containerStyle: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object
+  containerStyles: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
   ]),
   textStyles: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object
+    PropTypes.object,
+    PropTypes.array
   ]),
   text: PropTypes.string,
-  disebled: PropTypes.bool
+  disabled: PropTypes.bool,
+  children: PropTypes.element
 }
 
 const styles = StyleSheet.create({
   container: {
     height: 44,
     width: '100%',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
-    borderWidth: 2,
+    borderWidth: 2
   }
 })
 
